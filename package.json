@@ -1,12 +1,14 @@
 {
   "name": "survey-automation",
   "version": "0.0.0",
-  "scripts": {
+ "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "predeploy": "npm run build",
+"deploy": "gh-pages -d dist/Survey-Automation/browser"
   },
   "private": true,
   "packageManager": "npm@11.13.0",
@@ -24,6 +26,8 @@
     "@angular/build": "^22.0.3",
     "@angular/cli": "^22.0.3",
     "@angular/compiler-cli": "^22.0.0",
+    "angular-cli-ghpages": "^3.1.0",
+    "gh-pages": "^6.3.0",
     "jsdom": "^28.0.0",
     "prettier": "^3.8.1",
     "typescript": "~6.0.2",
