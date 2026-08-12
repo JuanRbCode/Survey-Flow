@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 @Service()
 export class SurveyService {
 
-    // La base de Render + el endpoint que tenías en tu API
     private apiUrl = 'https://survey-flow-api.onrender.com/api/automation/process-all';
     private http = inject(HttpClient);
 

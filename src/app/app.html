@@ -1,98 +1,159 @@
-<div class="container">
-  <!-- Header con Logo -->
-  <header class="header">
-    <svg class="tambo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="240" height="60">
-      <defs>
-        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
-          <stop offset="100%" style="stop-color:#6366F1;stop-opacity:1" />
-        </linearGradient>
-      </defs>
-      <!-- Icono de Marco QR + Rayo -->
-      <g transform="translate(10, 8)">
-        <rect x="0" y="0" width="18" height="18" rx="4" fill="none" stroke="url(#grad)" stroke-width="3" />
-        <rect x="5" y="5" width="8" height="8" rx="2" fill="url(#grad)" />
-        <path d="M 28 2 L 38 2 A 4 4 0 0 1 42 6 L 42 16" fill="none" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" />
-        <path d="M 2 28 L 2 38 A 4 4 0 0 0 6 42 L 16 42" fill="none" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" />
-        <path d="M 28 24 L 38 20 L 32 30 L 42 28 L 26 44 L 30 32 L 22 34 Z" fill="url(#grad)" />
-      </g>
-      <!-- Texto de la Marca -->
-      <text x="65" y="32" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="20" fill="#1E293B">
-        Survey<tspan fill="#8B5CF6">Flow</tspan>
-      </text>
-      <text x="65" y="46" font-family="'Segoe UI', Roboto, sans-serif" font-weight="500" font-size="11" fill="#64748B" letter-spacing="1">
-        AUTOMATION ENGINE
-      </text>
-    </svg>
+<div class="shell">
 
-    <img class="tambo" src="https://marketingperu.beglobal.biz/wp-content/uploads/2024/11/logo-tambo.png" alt="Tambo Logo" />
-  </header>
-
-  <!-- Tarjeta de Carga -->
-  <main class="card">
-    <div class="dropzone">
-      <input type="file" multiple accept="image/*" (change)="onFileChange($event)" class="file-input" />
-      <svg class="dropzone-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+  <!-- Header -->
+  <header class="topbar">
+    <div class="brand">
+      <svg class="brand-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 60" width="210" height="52">
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#7C5CFF;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#00E6C3;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <g transform="translate(10, 8)">
+          <rect x="0" y="0" width="18" height="18" rx="4" fill="none" stroke="url(#grad)" stroke-width="3" />
+          <rect x="5" y="5" width="8" height="8" rx="2" fill="url(#grad)" />
+          <path d="M 28 2 L 38 2 A 4 4 0 0 1 42 6 L 42 16" fill="none" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" />
+          <path d="M 2 28 L 2 38 A 4 4 0 0 0 6 42 L 16 42" fill="none" stroke="url(#grad)" stroke-width="3" stroke-linecap="round" />
+          <path d="M 28 24 L 38 20 L 32 30 L 42 28 L 26 44 L 30 32 L 22 34 Z" fill="url(#grad)" />
+        </g>
+        <text x="65" y="32" font-family="'Chakra Petch', sans-serif" font-weight="700" font-size="20" fill="#E8ECF5">
+          Survey<tspan fill="#7C5CFF">Flow</tspan>
+        </text>
+        <text x="65" y="46" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="10" fill="#8892A4" letter-spacing="1.5">
+          AUTOMATION ENGINE
+        </text>
       </svg>
-      <div class="dropzone-text">Arrastra tus fotos de QR aquí</div>
-      <div class="dropzone-subtext">o haz clic para seleccionar archivos (JPEG, PNG)</div>
     </div>
 
-    <!-- Archivos Seleccionados -->
+    <img class="tambo-logo" src="https://marketingperu.beglobal.biz/wp-content/uploads/2024/11/logo-tambo.png" alt="Tambo Logo" />
+  </header>
+
+  <div class="status-strip">
+    <span class="status-pill"><span class="status-dot"></span>MOTOR EN LÍNEA</span>
+  </div>
+
+  <!-- Tarjeta de carga -->
+  <main class="panel">
+    <div class="panel-eyebrow">Paso 01</div>
+    <h2 class="panel-title">Cargar códigos QR</h2>
+
+    <div class="dropzone">
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        (change)="onFileChange($event)"
+        class="file-input"
+      />
+      <span class="corner tl"></span>
+      <span class="corner tr"></span>
+      <span class="corner bl"></span>
+      <span class="corner br"></span>
+      <span class="scan-line"></span>
+
+      <div class="drop-icon">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+        </svg>
+      </div>
+      <div class="drop-text">Arrastra tus fotos de QR aquí</div>
+      <div class="drop-sub">o haz clic para seleccionar archivos (JPEG, PNG)</div>
+    </div>
+
+    <!-- Archivos seleccionados -->
     @if (selectedFiles.length > 0) {
       <div class="file-list">
         @for (file of selectedFiles; track file.name) {
-          <div class="file-item">
-            <span>📷 {{ file.name }}</span>
-            <small>{{ (file.size / 1024).toFixed(1) }} KB</small>
+          <div class="file-row">
+            <img [src]="getFileUrl(file)" alt="Miniatura QR" class="thumb" />
+            <div class="file-meta">
+              <div class="file-name">{{ file.name }}</div>
+              <div class="file-size">{{ (file.size / 1024).toFixed(1) }} KB</div>
+            </div>
+            <span class="chip chip-queue">EN COLA</span>
           </div>
         }
       </div>
     }
 
-    <!-- Botón con estado de carga -->
-    <button class="btn-primary" [disabled]="selectedFiles.length === 0 || loading" (click)="onSubmit()">
-      @if (loading) {
-        <div class="spinner"></div>
-        <span>Procesando encuestas...</span>
-      } @else {
-        <span>Procesar {{ selectedFiles.length }} QR(s)</span>
-      }
+    <!-- Barra de progreso -->
+    @if (loading) {
+      <div class="progress-block">
+        <div class="progress-text">Procesando elementos en paralelo…</div>
+        <div class="progress-track">
+          <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        </div>
+      </div>
+    }
+
+    <!-- Botón principal -->
+    <button
+      class="process-btn"
+      [class.is-loading]="loading"
+      [disabled]="selectedFiles.length === 0 || loading"
+      (click)="onSubmit()"
+    >
+      <span class="btn-label">Procesar {{ selectedFiles.length }} QR(s) automáticamente</span>
+      <span class="dot-loader"><span></span><span></span><span></span></span>
     </button>
   </main>
 
-  <!-- Panel de Resultados -->
+  <!-- Panel de resultados -->
   @if (responseResult) {
-    <section class="card results-container">
-      <h3>Resumen del Proceso</h3>
-      
-      <!-- Si la API devolvió un error global de conexión -->
+    <section class="panel">
+      <div class="panel-eyebrow">Paso 02</div>
+      <h2 class="panel-title">Resumen del proceso</h2>
+
       @if (responseResult.error && !responseResult.results) {
-        <div class="file-item">
-          <p class="error-text" style="margin: 0;">{{ responseResult.error }}</p>
+        <div class="alert-banner alert-err">
+          <div class="result-icon err">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 8v5M12 16.5v.01" />
+            </svg>
+          </div>
+          <p>{{ responseResult.error }}</p>
         </div>
       }
 
-      <!-- Listado de resultados por archivo -->
       @if (responseResult.results) {
-        <div class="file-list">
+        <div class="results-list">
           @for (item of responseResult.results; track item.filename) {
-            <div class="file-item">
-              <div>
-                <strong>{{ item.filename }}</strong>
+            <div class="result-row show">
+
+              @if (item.success) {
+                <div class="result-icon ok">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              } @else if (item.error && (item.error.toLowerCase().includes('ya realizada') || item.error.toLowerCase().includes('caducado') || item.error.toLowerCase().includes('no se encuentra disponible'))) {
+                <div class="result-icon dup">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 8v5l3 2" />
+                  </svg>
+                </div>
+              } @else {
+                <div class="result-icon err">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 8v5M12 16.5v.01" />
+                  </svg>
+                </div>
+              }
+
+              <div class="result-meta">
+                <div class="result-name">{{ item.filename }}</div>
                 @if (item.error) {
-                  <p class="error-text" style="color: #64748b; margin: 4px 0 0 0; font-size: 0.85rem;">{{ item.error }}</p>
+                  <div class="result-sub">{{ item.error }}</div>
                 }
               </div>
 
-              <!-- Badges Dinámicos de Estado -->
               @if (item.success) {
-                <span class="status-badge status-success">Completado</span>
+                <span class="chip chip-ok">Completado</span>
               } @else if (item.error && (item.error.toLowerCase().includes('ya realizada') || item.error.toLowerCase().includes('caducado') || item.error.toLowerCase().includes('no se encuentra disponible'))) {
-                <span class="status-badge status-warning">Ya Realizada</span>
+                <span class="chip chip-dup">Ya Realizada</span>
               } @else {
-                <span class="status-badge status-error">Error</span>
+                <span class="chip chip-err">Error</span>
               }
             </div>
           }
@@ -100,6 +161,7 @@
       }
     </section>
   }
+
 </div>
 
 <router-outlet />
