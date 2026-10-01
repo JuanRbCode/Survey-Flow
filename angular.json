@@ -2,8 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm",
-    "analytics": false
+    "packageManager": "npm"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -20,12 +19,14 @@
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "baseHref": "/Survey-Flow/",
+            
             "assets": [
               {
                 "glob": "**/*",
                 "input": "public"
               }
             ],
+
             "styles": ["src/styles.css"]
           },
           "configurations": {
