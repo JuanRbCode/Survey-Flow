@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class PersonaService {
   // Ajusta la URL base según corresponda a tu FastAPI
-  private apiUrl = 'https://survey-flow-api-production.up.railway.app/api/automation/personas'; 
+  private apiUrl = 'https://survey-flow-api-production.up.railway.app/api/automation/personas';
 
   constructor(private http: HttpClient) {}
 

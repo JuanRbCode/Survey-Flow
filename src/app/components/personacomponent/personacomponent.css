@@ -133,3 +133,32 @@
 .btn-submit:hover:not(:disabled) {
   opacity: 0.9;
 }
+
+.alert-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+/* Alerta de Error (Rojo sutil y elegante para fondo oscuro) */
+.alert-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+/* Alerta de Éxito (Turquesa/Verde sutil acorde a tu tema neón) */
+.alert-success {
+  background: rgba(45, 212, 191, 0.1);
+  border: 1px solid rgba(45, 212, 191, 0.3);
+  color: #2dd4bf;
+}
+
+.alert-icon {
+  font-size: 1.1rem;
+}

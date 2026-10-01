@@ -13,8 +13,10 @@ import { PersonaService } from '../../service/persona-service';
   styleUrl: './personacomponent.css',
 })
 export class Personacomponent {
-  isModalOpen: boolean = false;
   personaForm: FormGroup;
+  isModalOpen = false;
+  errorMessage: string | null = null;
+  successMessage: string | null = null;
 
   constructor(private fb: FormBuilder, private personaService: PersonaService) {
     this.personaForm = this.fb.group({
@@ -28,6 +30,8 @@ export class Personacomponent {
 
   abrirModal() {
     this.isModalOpen = true;
+    this.errorMessage = null;
+    this.successMessage = null;
   }
 
   cerrarModal() {
@@ -36,18 +40,29 @@ export class Personacomponent {
   }
 
   onSubmit() {
-    if (this.personaForm.valid) {
-      this.personaService.crearPersona(this.personaForm.value).subscribe({
-        next: (response) => {
-          // Alerta nativa elegante y al aceptarla se cierra y limpia
-          window.alert('¡Persona registrada con éxito en la base de datos!');
+    if (this.personaForm.invalid) return;
+
+    this.errorMessage = null;
+    this.successMessage = null;
+
+    this.personaService.crearPersona(this.personaForm.value).subscribe({
+      next: (response) => {
+        console.log('✅ Persona registrada con éxito:', response);
+        this.successMessage = '¡Persona registrada correctamente en la base de datos!';
+        setTimeout(() => {
           this.cerrarModal();
-        },
-        error: (err) => {
-          console.error(err);
-          window.alert('Hubo un error al guardar los datos en la base de datos.');
-        }
-      });
-    }
+        }, 1500); // Cierra el modal tras 1.5 segundos de éxito
+      },
+      error: (err) => {
+        // 1. Tira el error completo a la consola para que lo veas técnico
+        console.error('❌ Error detallado en la API:', err);
+
+        // 2. Captura el mensaje amigable que manda el backend (o uno por defecto)
+        const detalle = err.error?.detail || 'El correo o el DNI ya se encuentran registrados o hubo un conflicto.';
+
+        // 3. Lo asigna a la variable para mostrarlo visualmente en el modal
+        this.errorMessage = detalle;
+      }
+    });
   }
 }

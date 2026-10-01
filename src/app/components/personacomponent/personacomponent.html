@@ -1,18 +1,30 @@
-<!-- Botón principal para abrir el formulario con el estilo de la app -->
+<!-- Botón principal para abrir el modal -->
 <div class="action-bar">
   <button class="btn-open-modal" (click)="abrirModal()">
     ➕ Registrar Nueva Persona
   </button>
 </div>
 
-<!-- Modal Overlay (Fondo oscuro transparente) -->
+<!-- Modal Overlay -->
 <div class="modal-overlay" *ngIf="isModalOpen">
   <div class="modal-content">
     <div class="modal-header">
       <h2>Registrar Nueva Persona</h2>
       <button class="close-btn" (click)="cerrarModal()">×</button>
     </div>
-    
+
+    <!-- 🛑 Alerta visual bonita de error dentro del modal -->
+    <div class="alert-box alert-error" *ngIf="errorMessage">
+      <span class="alert-icon">⚠️</span>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- ✨ Alerta visual de éxito -->
+    <div class="alert-box alert-success" *ngIf="successMessage">
+      <span class="alert-icon">✅</span>
+      <p>{{ successMessage }}</p>
+    </div>
+
     <form [formGroup]="personaForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="nombres">Nombres</label>

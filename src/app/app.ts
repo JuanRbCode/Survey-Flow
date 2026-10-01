@@ -16,9 +16,9 @@ interface QueueItem {
 @Component({
   selector: 'app-root',
   imports: [
-    RouterOutlet, 
-    CommonModule, 
-    NgxScannerQrcodeComponent, 
+    RouterOutlet,
+    CommonModule,
+    NgxScannerQrcodeComponent,
     Personacomponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
@@ -42,11 +42,11 @@ export class App implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.verificarConexion(); // Verificar al cargar la página
-    
+
     // Configurar temporizador cada 5 minutos (300,000 ms) para verificar y mantener despierto el servidor
     this.pingInterval = setInterval(() => {
       this.verificarConexion();
-    }, 300000); 
+    }, 300000);
   }
 
   ngOnDestroy() {
@@ -57,7 +57,7 @@ export class App implements OnInit, OnDestroy {
   }
 
   verificarConexion() {
-    // Asumiendo que injectas HttpClient o usas tu surveyService. 
+    // Asumiendo que injectas HttpClient o usas tu surveyService.
     // Puedes hacer un get directo a tu endpoint de health:
     this.surveyService.checkHealth().subscribe({
       next: () => {
@@ -129,7 +129,7 @@ export class App implements OnInit, OnDestroy {
     audio.play().catch(err => console.log('Audio play blocked', err));
 
     const itemName = `Escaneado Cámara - ${Date.now()}`;
-    
+
     this.selectedItems.push({
       type: 'text',
       text: qrValue,
