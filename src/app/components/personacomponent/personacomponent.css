@@ -1,0 +1,135 @@
+/* Botón para abrir el modal (coincide con el estilo neón de tus botones) */
+.action-bar {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.btn-open-modal {
+  background: transparent;
+  color: #2dd4bf; /* Turquesa neón de tu app */
+  border: 1px solid #2dd4bf;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.1);
+}
+
+.btn-open-modal:hover {
+  background: rgba(45, 212, 191, 0.1);
+  box-shadow: 0 0 15px rgba(45, 212, 191, 0.3);
+}
+
+/* Fondo oscuro translúcido para el modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(2, 6, 23, 0.85); /* Azul muy oscuro traslúcido */
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Caja del formulario idéntica al diseño de tus tarjetas */
+.modal-content {
+  background: #0b1329; /* Fondo de tarjeta de tu app */
+  border: 1px solid #1e293b;
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  position: relative;
+  color: #f8fafc;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #1e293b;
+  padding-bottom: 10px;
+}
+
+.modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #f8fafc;
+}
+
+/* Campos del formulario adaptados al tema oscuro */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 14px;
+  background: #020617; /* Input oscuro profundo */
+  border: 1px solid #334155;
+  border-radius: 6px;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #2dd4bf; /* Destello turquesa al enfocar */
+}
+
+/* Botón de envío de acción */
+.btn-submit {
+  width: 100%;
+  background: linear-gradient(135deg, #0d9488, #0f766e);
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.2s;
+}
+
+.btn-submit:disabled {
+  background: #1e293b;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.btn-submit:hover:not(:disabled) {
+  opacity: 0.9;
+}

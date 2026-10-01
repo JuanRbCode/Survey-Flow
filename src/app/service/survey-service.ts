@@ -1,20 +1,35 @@
-
 import { HttpClient } from '@angular/common/http';
-import { inject, Service } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-@Service()
+@Injectable({
+  providedIn: 'root',
+})
 export class SurveyService {
+  private apionline = 'https://survey-flow-api-production.up.railway.app/api';
+  private apiUrl = 'https://survey-flow-api-production.up.railway.app/api/automation/process-all';
+  private http = inject(HttpClient);
 
-    private apiUrl = 'https://survey-flow-api.onrender.com/api/automation/process-all';
-    private http = inject(HttpClient);
+  checkHealth(): Observable<any> {
+    return this.http.get<any>(`${this.apionline}/health`);
+  }
 
-    uploadAndProcessQRs(files: File[]): Observable<any> {
-        const formData = new FormData();
-        files.forEach(file => {
-            formData.append('files', file, file.name);
-        });
+  uploadAndProcessQRs(items: { type: 'file' | 'text'; data: File | string }[]): Observable<any> {
+    const formData = new FormData();
 
-        return this.http.post<any>(this.apiUrl, formData);
-    }
+    const texts: string[] = [];
+
+    items.forEach((item, index) => {
+      if (item.type === 'file') {
+        formData.append('files', item.data as File, (item.data as File).name);
+      } else {
+        texts.push(item.data as string);
+      }
+    });
+
+    // Adjuntamos también los textos escaneados por la cámara directamente como campos del form
+    formData.append('scanned_texts', JSON.stringify(texts));
+
+    return this.http.post<any>(this.apiUrl, formData);
+  }
 }

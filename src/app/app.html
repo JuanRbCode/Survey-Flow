@@ -24,7 +24,7 @@
         </text>
         <text x="65" y="46" font-family="'JetBrains Mono', monospace" font-weight="500" font-size="10" fill="#8892A4"
           letter-spacing="1.5">
-          AUTOMATION ENGINE
+          AUTOMATION ENGINE (LOCAL)
         </text>
       </svg>
     </div>
@@ -34,14 +34,22 @@
   </header>
 
   <div class="status-strip">
-    <span class="status-pill"><span class="status-dot"></span>MOTOR EN LÍNEA</span>
+  <span class="status-pill" [class.offline]="!isServerConnected">
+    <span class="status-dot" [style.background-color]="isServerConnected ? '#2dd4bf' : '#ef4444'"></span>
+    {{ isServerConnected ? 'MOTOR LOCAL ACTIVO (PROXY + DB PERSONAS)' : 'SERVIDOR DESCONECTADO / DESPERTANDO...' }}
+  </span>
+</div>
+
+  <div>
+    <app-personacomponent></app-personacomponent>
   </div>
 
-  <!-- Tarjeta de carga -->
+  <!-- Tarjeta de carga de archivos y cámara unificada -->
   <main class="panel">
     <div class="panel-eyebrow">Paso 01</div>
-    <h2 class="panel-title">Cargar códigos QR</h2>
+    <h2 class="panel-title">Cargar o Escanear Códigos QR</h2>
 
+    <!-- Dropzone para archivos de imagen -->
     <div class="dropzone">
       <input type="file" multiple accept="image/*" (change)="onFileChange($event)" class="file-input" />
       <span class="corner tl"></span>
@@ -61,35 +69,47 @@
     </div>
 
     <br>
-
-    <p style="text-align: center;">o</p>
-
+    <p style="text-align: center; color: var(--text-dim);">o usa el escáner continuo con sonido</p>
     <br>
-    <!-- Input oculto pero vinculado a un botón que abre la cámara del celular directamente -->
-    <input type="file" accept="image/*" capture="environment" #cameraInput (change)="onFileChange($event)"
-      style="display: none;" />
 
-    <button class="btn-secondary-cyber" (click)="cameraInput.click()">
-      📷 Tomar Foto a QR con Cámara
-      
+    <!-- Botón para activar el escáner con sonido integrado -->
+    <button class="btn-secondary-cyber" (click)="toggleCamera()">
+      {{ isCameraActive ? '🛑 Apagar Escáner de Cámara' : '📷 Activar Escáner QR en Tiempo Real' }}
     </button>
-    <!-- Archivos seleccionados -->
-    @if (selectedFiles.length > 0) {
+
+    <!-- Contenedor del componente ngx-scanner-qrcode con sonido y lectura en vivo -->
+    @if (isCameraActive) {
+      <div class="camera-container">
+        <ngx-scanner-qrcode #action="scanner" (event)="onQRCodeScanned($event)"></ngx-scanner-qrcode>
+        <div class="camera-hint">Apunta la cámara al código QR. Sonará al detectar y se agregará a la cola.</div>
+      </div>
+    }
+
+    <!-- Cola de elementos seleccionados (Fotos + Textos escaneados) -->
+    @if (selectedItems.length > 0) {
     <div class="file-list">
-      @for (file of selectedFiles; track file.name; let i =$index) {
+      @for (item of selectedItems; track item.name; let i = $index) {
       <div class="file-row">
-        <img [src]="getFileUrl(file)" alt="Miniatura QR" class="thumb" />
+        @if (item.type === 'file' && item.file) {
+          <img [src]="getFileUrl(item.file)" alt="Miniatura QR" class="thumb" />
+        } @else {
+          <div class="thumb text-thumb">🔗</div>
+        }
         <div class="file-meta">
-          <div class="file-name">{{ file.name }}</div>
-          <div class="file-size">{{ (file.size / 1024).toFixed(1) }} KB</div>
+          <div class="file-name">{{ item.name }}</div>
+          <div class="file-size">
+            @if (item.type === 'file') {
+              {{ ((item.size || 0) / 1024).toFixed(1) }} KB (Imagen)
+            } @else {
+              Texto Escaneado / URL Directa
+            }
+          </div>
         </div>
         <span class="chip chip-queue">EN COLA</span>
-        
-        <!-- Botón para eliminar este archivo en específico -->
-        <button class="btn-delete-item" (click)="removeFile(i)" title="Eliminar de la cola">
+
+        <button class="btn-delete-item" (click)="removeItem(i)" title="Eliminar de la cola">
           ✕
         </button>
-        
       </div>
       }
     </div>
@@ -98,7 +118,7 @@
     <!-- Barra de progreso -->
     @if (loading) {
     <div class="progress-block">
-      <div class="progress-text">Procesando elementos en paralelo…</div>
+      <div class="progress-text">Procesando elementos y rotando proxys locales…</div>
       <div class="progress-track">
         <div class="progress-fill" [style.width.%]="progressPercentage"></div>
       </div>
@@ -106,9 +126,9 @@
     }
 
     <!-- Botón principal -->
-    <button class="process-btn" [class.is-loading]="loading" [disabled]="selectedFiles.length === 0 || loading"
+    <button class="process-btn" [class.is-loading]="loading" [disabled]="selectedItems.length === 0 || loading"
       (click)="onSubmit()">
-      <span class="btn-label">Procesar {{ selectedFiles.length }} QR(s) automáticamente</span>
+      <span class="btn-label">Procesar {{ selectedItems.length }} Elemento(s) en Paralelo</span>
       <span class="dot-loader"><span></span><span></span><span></span></span>
     </button>
   </main>
@@ -143,15 +163,6 @@
             <path d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        } @else if (item.error && (item.error.toLowerCase().includes('ya realizada') ||
-        item.error.toLowerCase().includes('caducado') || item.error.toLowerCase().includes('no se encuentra
-        disponible'))) {
-        <div class="result-icon dup">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-            stroke-linejoin="round">
-            <path d="M12 8v5l3 2" />
-          </svg>
-        </div>
         } @else {
         <div class="result-icon err">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -170,19 +181,17 @@
 
         @if (item.success) {
         <span class="chip chip-ok">Completado</span>
-        } @else if (item.error && (item.error.toLowerCase().includes('ya realizada') ||
-        item.error.toLowerCase().includes('caducado') || item.error.toLowerCase().includes('no se encuentra
-        disponible'))) {
-        <span class="chip chip-dup">Ya Realizada</span>
         } @else {
         <span class="chip chip-err">Error</span>
         }
       </div>
       }
+      
     </div>
     }
   </section>
   }
+
 
 </div>
 

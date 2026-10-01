@@ -1,0 +1,47 @@
+<!-- Botón principal para abrir el formulario con el estilo de la app -->
+<div class="action-bar">
+  <button class="btn-open-modal" (click)="abrirModal()">
+    ➕ Registrar Nueva Persona
+  </button>
+</div>
+
+<!-- Modal Overlay (Fondo oscuro transparente) -->
+<div class="modal-overlay" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Registrar Nueva Persona</h2>
+      <button class="close-btn" (click)="cerrarModal()">×</button>
+    </div>
+    
+    <form [formGroup]="personaForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nombres">Nombres</label>
+        <input type="text" id="nombres" formControlName="nombres" placeholder="Ej. Juan Carlos" />
+      </div>
+
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input type="text" id="apellidos" formControlName="apellidos" placeholder="Ej. Pérez Gómez" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo Electrónico</label>
+        <input type="email" id="email" formControlName="email" placeholder="ejemplo@gmail.com" />
+      </div>
+
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" formControlName="telefono" placeholder="Ej. 912345678" />
+      </div>
+
+      <div class="form-group">
+        <label for="dni">DNI</label>
+        <input type="text" id="dni" formControlName="dni" placeholder="Ej. 12345678" />
+      </div>
+
+      <button type="submit" [disabled]="personaForm.invalid" class="btn-submit">
+        Guardar en la Base de Datos
+      </button>
+    </form>
+  </div>
+</div>
