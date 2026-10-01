@@ -80,7 +80,11 @@
     <!-- Contenedor del componente ngx-scanner-qrcode con sonido y lectura en vivo -->
     @if (isCameraActive) {
       <div class="camera-container">
-        <ngx-scanner-qrcode #action="scanner" (event)="onQRCodeScanned($event)"></ngx-scanner-qrcode>
+        <ngx-scanner-qrcode
+          #action="scanner"
+          [config]="{ constraints: { video: { facingMode: 'environment' } } }"
+          (event)="onQRCodeScanned($event)">
+        </ngx-scanner-qrcode>
         <div class="camera-hint">Apunta la cámara al código QR. Sonará al detectar y se agregará a la cola.</div>
       </div>
     }
@@ -186,7 +190,7 @@
         }
       </div>
       }
-      
+
     </div>
     }
   </section>
